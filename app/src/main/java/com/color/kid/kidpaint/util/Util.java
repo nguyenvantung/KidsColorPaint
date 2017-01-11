@@ -33,13 +33,13 @@ public class Util {
     }
 
     public static Bitmap drawableToBitmap (Drawable drawable, Activity activity) {
-        if (drawable instanceof BitmapDrawable) {
-            return ((BitmapDrawable)drawable).getBitmap();
-        }
         Display display = activity.getWindowManager().getDefaultDisplay();
         float width = display.getWidth();
-        float height = display.getHeight();
-        Bitmap bitmap = Bitmap.createBitmap((int)width, (int)height, Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = Bitmap.createBitmap((int)width, (int)width, Bitmap.Config.ARGB_8888);
+        if (drawable instanceof BitmapDrawable) {
+            bitmap = ((BitmapDrawable)drawable).getBitmap();
+            return Util.getResizedBitmap(bitmap, (int) width, (int)width);
+        }
         Canvas canvas = new Canvas(bitmap);
         drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         drawable.draw(canvas);
@@ -58,7 +58,6 @@ public class Util {
 
         // "RECREATE" THE NEW BITMAP
         Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
-        bm.recycle();
         return resizedBitmap;
     }
 
