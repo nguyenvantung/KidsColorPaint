@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <com.color.kid.kidpaint.ui.DrawingSurface
+        android:id="@+id/drawingSurfaceView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/main_bottom_bar"
+        android:layout_below="@+id/header" />
+
+    <RelativeLayout
+        android:id="@+id/layoutPencilSize"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/tool_pencil_size_bgr"
+        android:gravity="center"
+        android:layout_marginTop="-5dp">
+
+
+        <RelativeLayout
+            android:id="@+id/pencilSize1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/tool_pencil_size_1" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/pencilSize2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="4dp"
+            android:layout_toRightOf="@+id/pencilSize1">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/tool_pencil_size_2" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/pencilSize3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="3dp"
+            android:layout_toRightOf="@+id/pencilSize2">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/tool_pencil_size_3" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/pencilSize4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="2dp"
+            android:layout_toRightOf="@+id/pencilSize3">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/tool_pencil_size_4" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/pencilSize5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/pencilSize4">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/tool_pencil_size_5" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/toolPencilClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/tool_pencil_size_cross" />
+
+
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_tool_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <RelativeLayout
+        android:id="@+id/main_bottom_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/play_color_bar">
+
+
+        <ImageView
+            android:id="@+id/footerToolLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/tool_arrow_left"
+            android:visibility="gone" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/listBucket"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/listPencil"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/footerToolRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/tool_arrow_right"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

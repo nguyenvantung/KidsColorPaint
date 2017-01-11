@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+
+    <color name="dialog_title_color">#33B5E5</color>
+    <color name="tools_text_color">#efefef</color>
+    <color name="transparent">#00000000</color>
+    <color name="custom_background_color">#002534</color>
+    <color name="text_color">@android:color/white</color>
+    <color name="rectangle_secondary_color">#33B5E5</color>
+    <color name="rectangle_primary_color">#555555</color>
+    <color name="holo_blue_bright">#33B5E5</color>
+    <color name="dialog_edittext_color">@android:color/white</color>
+    <color name="dialog_edittext_color_hint">#80000000</color>
+    <color name="cursor_tool_deactive_primary_color">#555555</color>
+    <color name="dialog_subtitle">#CCCCCC</color>
+    <color name="dialog_subtitle_border">#696969</color>
+    <color name="dialog_background_pre_v14_color">#FF1E1E1E</color>
+    <color name="color_chooser_rgb_red">#FFEB4618</color>
+    <color name="color_chooser_rgb_green">#FF078707</color>
+    <color name="color_chooser_rgb_blue">#FF0284e7</color>
+    <color name="color_chooser_rgb_alpha">#FFCCCCCC</color>
+
+    <!-- colors for preselect colorchooser -->
+    <color name="color_chooser_blue1">#FF0074CD</color>
+    <color name="color_chooser_blue2">#FF00B4F1</color>
+    <color name="color_chooser_green1">#FF078707</color>
+    <color name="color_chooser_green2">#FF8EC430</color>
+    <color name="color_chooser_brown1">#FF61290E</color>
+    <color name="color_chooser_brown2">#FFA84818</color>
+    <color name="color_chooser_brown3">#FFDEAE66</color>
+    <color name="color_chooser_brown4">#FFF0E4A8</color>
+    <color name="color_chooser_purple1">#FF7D1379</color>
+    <color name="color_chooser_purple2">#FFA743D1</color>
+    <color name="color_chooser_purple3">#FFCA0186</color>
+    <color name="color_chooser_purple4">#FFEB90D3</color>
+    <color name="color_chooser_red1">#FFC5060E</color>
+    <color name="color_chooser_orange1">#FFEB4618</color>
+    <color name="color_chooser_orange2">#FFF9921C</color>
+    <color name="color_chooser_yellow">#FFF3D605</color>
+    <color name="color_chooser_black">#FF000000</color>
+    <color name="color_chooser_gray">#FFA3A3A3</color>
+    <color name="color_chooser_white">#FFFFFFFF</color>
+    <color name="color_chooser_transparent">#00000000</color>
+
+    <color name="theme_bgr">#ffffffff</color>
+    <color name="vailet">#ff96268c</color>
+    <color name="white">#ffffffff</color>
+    <color name="yellow">#fff7ed11</color>
+    <color name="light_blue">#ff2ab7e2</color>
+    <color name="adult_color">#ffff5300</color>
+    <color name="aquamarine">#ff3fe0d0</color>
+    <color name="banner_color">#ff00a8de</color>
+    <color name="beige">#ffeec09c</color>
+    <color name="black">#ff1e1e1e</color>
+    <color name="blue">#ff0071bd</color>
+    <color name="bright_green">#ff6bfb05</color>
+    <color name="brown">#ff764c24</color>
+    <color name="copper">#ffb97232</color>
+    <color name="crimson">#ff5f002c</color>
+    <color name="gold">#fffcc200</color>
+    <color name="green">#ff3bb44a</color>
+    <color name="grey">#ff999997</color>
+    <color name="magenta">#ff9e005d</color>
+    <color name="orange">#fff15a25</color>
+    <color name="pink">#ffff7bac</color>
+    <color name="purple">#ff8731ca</color>
+    <color name="rate_blue">#ff00a8de</color>
+    <color name="rate_green">#ff6cc064</color>
+    <color name="rate_later">#ff00a8de</color>
+    <color name="red">#ffbe292d</color>
+
+    <color name="select_picture_text_start">#ffefd17e</color>
+    <color name="select_picture_text_ends">#ffefb700</color>
+    <color name="select_picture_text_outline">#ffffffff</color>
+    <color name="select_picture_text_shadow">#ff88671a</color>
+
+</resources>

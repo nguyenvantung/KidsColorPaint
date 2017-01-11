@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout android:id="@+id/colorchooser_base_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <com.color.kid.kidpaint.dialog.colorpicker.ColorPickerView
+        android:id="@+id/view_colorpicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:id="@+id/layout_colorbuttons"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <com.color.kid.kidpaint.dialog.colorpicker.CheckeredTransparentLinearLayout
+            android:id="@+id/colorchooser_ok_button_base_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:background="@android:color/black">
+
+            <Button
+                android:id="@+id/btn_colorchooser_ok"
+                android:layout_width="fill_parent"
+                android:layout_height="48dp"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:text="@string/done"
+                android:textColor="@color/color_chooser_white"
+                android:textSize="14sp"/>
+        </com.color.kid.kidpaint.dialog.colorpicker.CheckeredTransparentLinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
+

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="240dp"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:background="@drawable/tool_pencil_size_bgr"
+    android:gravity="center"
+    android:id="@+id/layoutPencilSize">
+
+
+    <RelativeLayout
+        android:id="@+id/pencilSize1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/tool_pencil_size_1" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/pencilSize2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="4dp"
+        android:layout_toRightOf="@+id/pencilSize1">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/tool_pencil_size_2" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/pencilSize3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="3dp"
+        android:layout_toRightOf="@+id/pencilSize2">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/tool_pencil_size_3" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/pencilSize4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="2dp"
+        android:layout_toRightOf="@+id/pencilSize3">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/tool_pencil_size_4" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/pencilSize5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/pencilSize4">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/tool_pencil_size_5" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/toolPencilClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:src="@drawable/tool_pencil_size_cross" />
+
+
+</RelativeLayout>
