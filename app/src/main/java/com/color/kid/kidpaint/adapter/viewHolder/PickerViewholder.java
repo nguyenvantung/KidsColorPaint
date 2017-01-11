@@ -33,8 +33,8 @@ public class PickerViewholder extends RecyclerView.ViewHolder implements View.On
     @Override
     public void onClick(View view) {
         if (PaintroidApplication.currentTool != null) {
-            PaintroidApplication.currentTool
-                    .attributeButtonClick(TopBar.ToolButtonIDs.BUTTON_ID_PARAMETER_BOTTOM_2);
+         /*   PaintroidApplication.currentTool
+                    .attributeButtonClick(TopBar.ToolButtonIDs.BUTTON_ID_PARAMETER_BOTTOM_2);*/
         }
     }
 

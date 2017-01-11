@@ -415,9 +415,10 @@ public abstract class OptionsActivity extends FragmentActivity {
 		Display display = getWindowManager().getDefaultDisplay();
 		float width = display.getWidth();
 		float height = display.getHeight();
-		Bitmap bitmap = Bitmap.createBitmap((int) width, (int) height, Bitmap.Config.ARGB_8888);
-		bitmap.eraseColor(getColor(R.color.white));
-		PaintroidApplication.drawingSurface.resetBitmap(Util.overlay(bitmap, Util.drawableToBitmap(drawable, this)));
+		Bitmap bitmapackground = Bitmap.createBitmap((int) width, (int) height, Bitmap.Config.ARGB_8888);
+		bitmapackground.eraseColor(getColor(R.color.white));
+		Bitmap bitmapData = Util.drawableToBitmap(drawable, this);
+		PaintroidApplication.drawingSurface.resetBitmap(bitmapackground);
 		PaintroidApplication.perspective.resetScaleAndTranslation();
 		mCurrentTool = new DrawTool(this, ToolType.BRUSH);
 		PaintroidApplication.currentTool = mCurrentTool;

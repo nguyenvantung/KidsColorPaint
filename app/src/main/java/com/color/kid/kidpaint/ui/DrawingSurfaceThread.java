@@ -33,7 +33,7 @@ class DrawingSurfaceThread {
 		@Override
 		public void run() {
 			Thread.yield();
-			internalRun();
+			//internalRun();
 		}
 	}
 
