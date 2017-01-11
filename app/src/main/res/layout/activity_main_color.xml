@@ -14,90 +14,99 @@
 
     <RelativeLayout
         android:id="@+id/layoutPencilSize"
-        android:layout_width="240dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:background="@drawable/tool_pencil_size_bgr"
-        android:gravity="center"
-        android:layout_marginTop="-5dp">
-
-
-        <RelativeLayout
-            android:id="@+id/pencilSize1"
-            android:layout_width="wrap_content"
+        android:gravity="center">
+        <LinearLayout
+            android:layout_width="240dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="5dp">
+            android:gravity="center"
+            android:orientation="horizontal">
 
-            <ImageView
+            <RelativeLayout
+                android:id="@+id/pencilSize1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:src="@drawable/tool_pencil_size_1" />
-        </RelativeLayout>
+                android:padding="5dp"
+                android:background="@drawable/background_pencil_size_select">
 
-        <RelativeLayout
-            android:id="@+id/pencilSize2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="4dp"
-            android:layout_toRightOf="@+id/pencilSize1">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/tool_pencil_size_1" />
+            </RelativeLayout>
 
-            <ImageView
+            <RelativeLayout
+                android:id="@+id/pencilSize2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/tool_pencil_size_2" />
-        </RelativeLayout>
+                android:layout_marginLeft="15dp"
+                android:padding="5dp"
+                android:layout_toRightOf="@+id/pencilSize1">
 
-        <RelativeLayout
-            android:id="@+id/pencilSize3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="3dp"
-            android:layout_toRightOf="@+id/pencilSize2">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/tool_pencil_size_2" />
+            </RelativeLayout>
 
-            <ImageView
+            <RelativeLayout
+                android:id="@+id/pencilSize3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/tool_pencil_size_3" />
-        </RelativeLayout>
+                android:layout_marginLeft="15dp"
+                android:padding="5dp"
+                android:layout_toRightOf="@+id/pencilSize2">
 
-        <RelativeLayout
-            android:id="@+id/pencilSize4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="2dp"
-            android:layout_toRightOf="@+id/pencilSize3">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/tool_pencil_size_3" />
+            </RelativeLayout>
 
-            <ImageView
+            <RelativeLayout
+                android:id="@+id/pencilSize4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/tool_pencil_size_4" />
-        </RelativeLayout>
+                android:layout_marginLeft="15dp"
+                android:padding="5dp"
+                android:layout_toRightOf="@+id/pencilSize3">
 
-        <RelativeLayout
-            android:id="@+id/pencilSize5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@+id/pencilSize4">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/tool_pencil_size_4" />
+            </RelativeLayout>
 
-            <ImageView
+            <RelativeLayout
+                android:id="@+id/pencilSize5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/tool_pencil_size_5" />
-        </RelativeLayout>
+                android:layout_marginLeft="15dp"
+                android:padding="5dp"
+                android:layout_toRightOf="@+id/pencilSize4">
 
-        <ImageView
-            android:id="@+id/toolPencilClose"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"
-            android:src="@drawable/tool_pencil_size_cross" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/tool_pencil_size_5" />
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/toolPencilClose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="25dp"
+
+                android:src="@drawable/tool_pencil_size_cross" />
+        </LinearLayout>
+
+
+
 
 
     </RelativeLayout>

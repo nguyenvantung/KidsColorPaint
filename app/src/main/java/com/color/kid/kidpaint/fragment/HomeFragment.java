@@ -62,11 +62,11 @@ public class HomeFragment extends BaseFragment {
         if (!AppConstance.isPlaymusic) {
             imgMusic.setSelected(true);
             AppConstance.isPlaymusic = true;
-            Util.playMusic(getActivity()).start();
+//            Util.playMusic(getActivity()).start();
         } else {
             AppConstance.isPlaymusic = false;
             imgMusic.setSelected(false);
-            Util.playMusic(getActivity()).stop();
+//            Util.playMusic(getActivity()).stop();
         }
     }
 

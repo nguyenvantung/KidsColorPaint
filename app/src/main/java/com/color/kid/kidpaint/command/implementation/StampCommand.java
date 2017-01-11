@@ -25,7 +25,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.RectF;
 
-import com.color.kid.kidpaint.activity.FileIO;
+import com.color.kid.kidpaint.util.FileIO;
 
 
 public class StampCommand extends BaseCommand {

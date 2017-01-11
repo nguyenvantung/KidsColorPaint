@@ -17,7 +17,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.color.kid.kidpaint.activity;
+package com.color.kid.kidpaint.util;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -36,6 +36,7 @@ import android.view.Display;
 import android.view.WindowManager;
 
 import com.color.kid.kidpaint.R;
+import com.color.kid.kidpaint.activity.PaintroidApplication;
 
 import java.io.File;
 import java.io.FileNotFoundException;

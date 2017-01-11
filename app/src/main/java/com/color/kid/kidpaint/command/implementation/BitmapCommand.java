@@ -24,7 +24,7 @@ import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.Color;
 
-import com.color.kid.kidpaint.activity.FileIO;
+import com.color.kid.kidpaint.util.FileIO;
 import com.color.kid.kidpaint.activity.PaintroidApplication;
 
 

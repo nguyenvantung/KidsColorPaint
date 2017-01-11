@@ -29,7 +29,6 @@ import android.graphics.Paint;
 import android.graphics.Paint.Cap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -51,7 +50,6 @@ import com.color.kid.kidpaint.dialog.IndeterminateProgressDialog;
 import com.color.kid.kidpaint.dialog.TextToolDialog;
 import com.color.kid.kidpaint.dialog.ToolsDialog;
 import com.color.kid.kidpaint.dialog.colorpicker.ColorPickerDialog;
-import com.color.kid.kidpaint.fragment.HomeFragment;
 import com.color.kid.kidpaint.listener.DrawingSurfaceListener;
 import com.color.kid.kidpaint.listener.OnClickItemBush;
 import com.color.kid.kidpaint.listener.OnClickItemDraw;
@@ -61,9 +59,8 @@ import com.color.kid.kidpaint.tools.ToolType;
 import com.color.kid.kidpaint.tools.implementation.ImportTool;
 import com.color.kid.kidpaint.ui.DrawingSurface;
 import com.color.kid.kidpaint.ui.Perspective;
-import com.color.kid.kidpaint.util.AnimationBottom;
-import com.color.kid.kidpaint.util.AnimationTop;
 import com.color.kid.kidpaint.util.ColoringUtility;
+import com.color.kid.kidpaint.util.FileIO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,6 +103,21 @@ public class MainActivity extends OptionsActivity implements OnClickItemBush, On
 
 	@Bind(R.id.toolPencilClose)
 	ImageView imgClosePencilSize;
+
+	@Bind(R.id.pencilSize1)
+	RelativeLayout pencilSize1;
+
+	@Bind(R.id.pencilSize2)
+	RelativeLayout pencilSize2;
+
+	@Bind(R.id.pencilSize3)
+	RelativeLayout pencilSize3;
+
+	@Bind(R.id.pencilSize4)
+	RelativeLayout pencilSize4;
+
+	@Bind(R.id.pencilSize5)
+	RelativeLayout pencilSize5;
 
 
 	protected DrawingSurfaceListener mDrawingSurfaceListener;
@@ -526,6 +538,56 @@ public class MainActivity extends OptionsActivity implements OnClickItemBush, On
 		}
 
 		public void onAnimationRepeat(Animator animation) {
+		}
+	}
+
+	@OnClick(R.id.pencilSize1)
+	void selectSize1(){
+		setSelcectPencilSize(1);
+	}
+
+	@OnClick(R.id.pencilSize2)
+	void selectSize2(){
+		setSelcectPencilSize(2);
+	}
+
+	@OnClick(R.id.pencilSize3)
+	void selectSize3(){
+		setSelcectPencilSize(3);
+	}
+
+	@OnClick(R.id.pencilSize4)
+	void selectSize4(){
+		setSelcectPencilSize(4);
+	}
+
+	@OnClick(R.id.pencilSize5)
+	void selectSize5(){
+		setSelcectPencilSize(5);
+	}
+
+	public void setSelcectPencilSize(int size){
+		pencilSize1.setBackgroundResource(0);
+		pencilSize2.setBackgroundResource(0);
+		pencilSize3.setBackgroundResource(0);
+		pencilSize4.setBackgroundResource(0);
+		pencilSize5.setBackgroundResource(0);
+		switch (size){
+			case 1:
+				pencilSize1.setBackgroundResource(R.drawable.background_pencil_size_select);
+				break;
+			case 2:
+				pencilSize2.setBackgroundResource(R.drawable.background_pencil_size_select);
+				break;
+			case 3:
+				pencilSize3.setBackgroundResource(R.drawable.background_pencil_size_select);
+				break;
+			case 4:
+				pencilSize4.setBackgroundResource(R.drawable.background_pencil_size_select);
+				break;
+			case 5:
+				pencilSize5.setBackgroundResource(R.drawable.background_pencil_size_select);
+				break;
 		}
 	}
 }

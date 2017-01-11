@@ -28,9 +28,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Display;
@@ -45,6 +43,7 @@ import com.color.kid.kidpaint.tools.Tool;
 import com.color.kid.kidpaint.tools.ToolType;
 import com.color.kid.kidpaint.tools.implementation.DrawTool;
 import com.color.kid.kidpaint.tools.implementation.ImportTool;
+import com.color.kid.kidpaint.util.FileIO;
 import com.color.kid.kidpaint.util.Util;
 
 import java.io.File;
@@ -416,7 +415,7 @@ public abstract class OptionsActivity extends FragmentActivity {
 		float width = display.getWidth();
 		float height = display.getHeight();
 		Bitmap bitmap = Bitmap.createBitmap((int) width, (int) height, Bitmap.Config.ARGB_8888);
-		bitmap.eraseColor(getColor(R.color.white));
+		//bitmap.eraseColor(getColor(R.color.white));
 		PaintroidApplication.drawingSurface.resetBitmap(Util.overlay(bitmap, Util.drawableToBitmap(drawable, this)));
 		PaintroidApplication.perspective.resetScaleAndTranslation();
 		mCurrentTool = new DrawTool(this, ToolType.BRUSH);
