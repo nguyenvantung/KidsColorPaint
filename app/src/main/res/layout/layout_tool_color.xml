@@ -43,7 +43,7 @@
             android:id="@+id/toolZoom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/tool_share"
+            android:src="@drawable/tool_zoom"
             android:layout_margin="2dp"/>
 
         <ImageView

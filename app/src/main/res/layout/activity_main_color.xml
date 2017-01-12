@@ -105,10 +105,6 @@
                 android:src="@drawable/tool_pencil_size_cross" />
         </LinearLayout>
 
-
-
-
-
     </RelativeLayout>
 
     <include

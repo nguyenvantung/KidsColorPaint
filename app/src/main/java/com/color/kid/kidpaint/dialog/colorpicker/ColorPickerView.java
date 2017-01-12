@@ -142,23 +142,21 @@ public class ColorPickerView extends LinearLayout {
 		mTabHost.setup();
 		ColorTabContentFactory factory = new ColorTabContentFactory();
 
-		View preTabView = createTabView(getContext(),
+	/*	View preTabView = createTabView(getContext(),
 				R.drawable.icon_color_chooser_tab_palette);
 		TabSpec preTab = mTabHost.newTabSpec(PRE_TAG).setIndicator(preTabView)
-				.setContent(factory);
+				.setContent(factory);*/
 
 		View hsvTabView = createTabView(getContext(),
 				R.drawable.icon_color_chooser_tab_circle);
 		TabSpec hsvTab = mTabHost.newTabSpec(CIRCLE_TAG)
 				.setIndicator(hsvTabView).setContent(factory);
 
-		View rgbTabView = createTabView(getContext(),
+		/*View rgbTabView = createTabView(getContext(),
 				R.drawable.icon_color_chooser_tab_rgba);
 		TabSpec rgbTab = mTabHost.newTabSpec(RGB_TAG).setIndicator(rgbTabView)
-				.setContent(factory);
-		mTabHost.addTab(preTab);
+				.setContent(factory);*/
 		mTabHost.addTab(hsvTab);
-		mTabHost.addTab(rgbTab);
 	}
 
 	private static View createTabView(final Context context,

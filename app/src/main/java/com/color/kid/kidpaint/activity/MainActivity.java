@@ -33,6 +33,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.SurfaceView;
+import android.view.View;
 import android.view.animation.BounceInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -121,11 +122,13 @@ public class MainActivity extends OptionsActivity implements OnClickItemBush, On
 
 
 	protected DrawingSurfaceListener mDrawingSurfaceListener;
-	protected boolean mToolbarIsVisible = true;
+	protected boolean mToolbarIsVisible = false;
 	private int drawableData;
 	private PencilAdapter pencilAdapter;
 	private BucketAdapter bucketAdapter;
 	private Tool toolOption;
+
+	private int paintStrokeWidth = 25;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -186,10 +189,9 @@ public class MainActivity extends OptionsActivity implements OnClickItemBush, On
 	protected void onDestroy() {
 		PaintroidApplication.commandManager.resetAndClear();
 		PaintroidApplication.drawingSurface.recycleBitmap();
-		ColorPickerDialog.getInstance().setInitialColor(
-				getResources().getColor(R.color.color_chooser_black));
+		ColorPickerDialog.getInstance().setInitialColor(getResources().getColor(R.color.aquamarine));
 		PaintroidApplication.currentTool.changePaintStrokeCap(Cap.ROUND);
-		PaintroidApplication.currentTool.changePaintStrokeWidth(25);
+		PaintroidApplication.currentTool.changePaintStrokeWidth(paintStrokeWidth);
 		PaintroidApplication.isPlainImage = true;
 		PaintroidApplication.savedPictureUri = null;
 		PaintroidApplication.saveCopy = false;
@@ -203,15 +205,11 @@ public class MainActivity extends OptionsActivity implements OnClickItemBush, On
 
 	@Override
 	public void onBackPressed() {
-		if (!mToolbarIsVisible) {
-			//setFullScreen(false);
-
-		} else if (PaintroidApplication.currentTool.getToolType() == ToolType.BRUSH) {
-			showSecurityQuestionBeforeExit();
-		} else {
-			switchTool(ToolType.BRUSH);
-		}
+		//showSecurityQuestionBeforeExit();
+		super.onBackPressed();
 	}
+
+
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -400,7 +398,7 @@ public class MainActivity extends OptionsActivity implements OnClickItemBush, On
 		for (int i = 0; i < listBucket.length; i++) {
 			Bucket bucket = new Bucket();
 			bucket.color = ColoringUtility.COLORS_MAPS.get(i);
-			bucket.drawable = listPencil[i];
+			bucket.drawable = listBucket[i];
 			listBucketData.add(bucket);
 
 		}
@@ -411,11 +409,12 @@ public class MainActivity extends OptionsActivity implements OnClickItemBush, On
 	public void selectItemBush(Pencil pencil) {
 		pencilAdapter.notifyDataSetChanged();
 		setDataSelect(pencil);
+		ColorPickerDialog.getInstance().setInitialColor(getResources().getColor(pencil.color));
 	}
 
 	@Override
-	public void onclickItemDraw(int color, boolean pencil) {
-
+	public void onclickItemDraw(Bucket bucket) {
+		ColorPickerDialog.getInstance().setInitialColor(getResources().getColor(bucket.color));
 	}
 
 	public void setDataSelect(Pencil pencil){
@@ -430,6 +429,8 @@ public class MainActivity extends OptionsActivity implements OnClickItemBush, On
 
 	@OnClick(R.id.toolBucket)
 	void onClickBucket(){
+		recyclerViewPencil.setVisibility(View.GONE);
+		recyclerViewBucket.setVisibility(View.VISIBLE);
 		if (!imgBucket.isSelected()){
 			imgBucket.setSelected(true);
 			imgBush.setSelected(false);
@@ -437,16 +438,23 @@ public class MainActivity extends OptionsActivity implements OnClickItemBush, On
 
 		toolOption = ToolFactory.createTool(this, ToolType.FILL);
 		switchTool(toolOption);
+		if (mToolbarIsVisible){
+			setVisiblePencilSize();
+		}
 
 	}
 
 	@OnClick(R.id.toolBush)
 	void onClickBush(){
+		recyclerViewPencil.setVisibility(View.VISIBLE);
+		recyclerViewBucket.setVisibility(View.GONE);
 		if (!imgBush.isSelected()){
 			imgBush.setSelected(true);
 			imgBucket.setSelected(false);
 		}
-		setVisiblePencilSize();
+		if (mToolbarIsVisible){
+			setVisiblePencilSize();
+		}
 		toolOption = ToolFactory.createTool(this, ToolType.BRUSH);
 		switchTool(toolOption);
 	}
@@ -477,6 +485,7 @@ public class MainActivity extends OptionsActivity implements OnClickItemBush, On
 	void onClickShare(){
 		toolOption = ToolFactory.createTool(this, ToolType.ZOOM);
 		switchTool(toolOption);
+		setVisiblePencilSize();
 	}
 
 	@OnClick(R.id.toolDone)
@@ -490,11 +499,13 @@ public class MainActivity extends OptionsActivity implements OnClickItemBush, On
 					.getDimensionPixelSize(R.dimen.main_pencil_margin_top))
 					.setDuration(300).setInterpolator(new BounceInterpolator())
 					.setListener(new AnimationTop()).start();
+			mToolbarIsVisible = true;
 		} else {
 			layoutPencilSize.animate().translationY((float) getResources()
 					.getDimensionPixelSize(R.dimen.main_pencil_margin_top) * -1)
 					.setDuration(300).setInterpolator(new BounceInterpolator())
 					.setListener(new AnimationBotton()).start();
+			mToolbarIsVisible = false;
 		}
 	}
 
@@ -574,20 +585,27 @@ public class MainActivity extends OptionsActivity implements OnClickItemBush, On
 		pencilSize5.setBackgroundResource(0);
 		switch (size){
 			case 1:
+				paintStrokeWidth = 25;
 				pencilSize1.setBackgroundResource(R.drawable.background_pencil_size_select);
 				break;
 			case 2:
+				paintStrokeWidth = 30;
 				pencilSize2.setBackgroundResource(R.drawable.background_pencil_size_select);
 				break;
 			case 3:
+				paintStrokeWidth = 35;
 				pencilSize3.setBackgroundResource(R.drawable.background_pencil_size_select);
 				break;
 			case 4:
+				paintStrokeWidth = 40;
 				pencilSize4.setBackgroundResource(R.drawable.background_pencil_size_select);
 				break;
 			case 5:
+				paintStrokeWidth = 45;
 				pencilSize5.setBackgroundResource(R.drawable.background_pencil_size_select);
 				break;
 		}
+		PaintroidApplication.currentTool.changePaintStrokeWidth(paintStrokeWidth);
+		setVisiblePencilSize();
 	}
 }

@@ -29,7 +29,7 @@ public class BucketViewHolder extends RecyclerView.ViewHolder implements View.On
     @Override
     public void onClick(View view) {
         if (onClickItemDraw != null){
-            onClickItemDraw.onclickItemDraw(bucket.color, true);
+            onClickItemDraw.onclickItemDraw(bucket);
         }
     }
 

@@ -110,7 +110,7 @@ public class EraserTool extends DrawTool {
 
 	@Override
 	public void setDrawPaint(Paint paint) {
-		changePaintColor(Color.TRANSPARENT);
+		changePaintColor(Color.WHITE);
 		// previous paint object has already been saved in constructor
 	}
 }

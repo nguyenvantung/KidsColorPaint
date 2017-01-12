@@ -25,8 +25,10 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.util.Log;
 
+import com.color.kid.kidpaint.R;
 import com.color.kid.kidpaint.activity.PaintroidApplication;
 import com.color.kid.kidpaint.tools.helper.FillAlgorithm;
+import com.color.kid.kidpaint.tools.helper.QueueLinearFloodFiller;
 
 
 public class FillCommand extends BaseCommand {
@@ -58,8 +60,11 @@ public class FillCommand extends BaseCommand {
 		} else {
 			int replacementColor = bitmap.getPixel(mClickedPixel.x, mClickedPixel.y);
 			int targetColor = mPaint.getColor();
-			FillAlgorithm fillAlgorithm = new FillAlgorithm(bitmap, mClickedPixel, targetColor, replacementColor, mColorTolerance);
-			fillAlgorithm.performFilling();
+			/*FillAlgorithm fillAlgorithm = new FillAlgorithm(bitmap, mClickedPixel, targetColor, replacementColor, mColorTolerance);
+			fillAlgorithm.performFilling();*/
+			QueueLinearFloodFiller queueLinearFloodFiller = new QueueLinearFloodFiller(bitmap, targetColor, PaintroidApplication.applicationContext.getColor(R.color.rate_blue));
+			queueLinearFloodFiller.setTolerance(100);
+			queueLinearFloodFiller.floodFill(mClickedPixel.x, mClickedPixel.y);
 		}
 
 		notifyStatus(NOTIFY_STATES.COMMAND_DONE);

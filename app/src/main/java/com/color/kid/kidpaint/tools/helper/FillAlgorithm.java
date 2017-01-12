@@ -80,9 +80,12 @@ public class FillAlgorithm {
 		mConsiderTolerance = colorToleranceThreshold > 0;
 	}
 
-	public void performFilling()
-	{
-		Range range = generateRangeAndReplaceColor(mClickedPixel.y, mClickedPixel.x, UP);
+	public FillAlgorithm(){
+
+	}
+
+	public void performFilling(){
+		Range range = generateRangeAndReplaceColor(mClickedPixel.y + 10, mClickedPixel.x + 10, UP);
 		mRanges.add(range);
 		mRanges.add(new Range(range.line, range.start, range.end, DOWN));
 
@@ -135,7 +138,7 @@ public class FillAlgorithm {
 
 		range.line = row;
 		range.start = start;
-		range.end = i-1;
+		range.end = i;
 		range.direction = direction;
 		
 		mBitmap.setPixels(mPixels[row], start, mWidth, start, row, i - start, 1);
@@ -151,14 +154,14 @@ public class FillAlgorithm {
 				newRange = generateRangeAndReplaceColor(row, col, directionUp);
 				mRanges.add(newRange);
 
-				if (newRange.start <= range.start - 2) {
+				if (newRange.start <= range.start) {
 					mRanges.add(new Range(row, newRange.start, range.start - 2, !directionUp));
 				}
-				if (newRange.end >= range.end + 2) {
+				if (newRange.end >= range.end) {
 					mRanges.add(new Range(row, range.end + 2, newRange.end, !directionUp));
 				}
 
-				if (newRange.end >= range.end - 1) {
+				if (newRange.end >= range.end) {
 					break;
 				} else {
 					col = newRange.end + 1;
@@ -176,5 +179,99 @@ public class FillAlgorithm {
 		return redDiff*redDiff + greenDiff*greenDiff + blueDiff*blueDiff + alphaDiff*alphaDiff
 				<= mColorToleranceThresholdSquared;
 	}
+
+
+	/////////////////
+	int minR, maxR, minG, maxG, minB, maxB;  // instance values
+
+	public void floodFill_array(Bitmap bmp, Point pt, int targetColor, int replacementColor, int tolerance)
+	{
+		if(targetColor == replacementColor)
+			return;
+
+        /* tolerable values */
+		minR = ((targetColor & 0xFF0000) >> 16) - tolerance;
+		if(minR < 0) minR = 0;
+		else minR = minR << 16;
+		maxR = ((targetColor & 0xFF0000) >> 16) + tolerance;
+		if(maxR > 0xFF) maxR = 0xFF0000;
+		else maxR = maxR << 16;
+
+		minG = ((targetColor & 0x00FF00) >> 8) - tolerance;
+		if(minG < 0) minG = 0;
+		else minG = minG << 8;
+		maxG = ((targetColor & 0x00FF00) >> 8) + tolerance;
+		if(maxG > 0xFF) maxG = 0x00FF00;
+		else maxG = maxG << 8;
+
+		minB = (targetColor & 0x0000FF) - tolerance;
+		if(minB < 0) minB = 0;
+		maxB = (targetColor & 0x0000FF) + tolerance;
+		if(maxB > 0xFF) maxB = 0x0000FF;
+        /* tolerable values */
+
+		int width, height;
+		int[] arrPixels;
+
+		width = bmp.getWidth();
+		height = bmp.getHeight();
+
+		arrPixels = new int[width*height];
+		bmp.getPixels(arrPixels, 0, width, 0, 0, width, height);
+
+		Queue<Point> q = new LinkedList<Point>();
+		q.add(pt);
+
+		while (q.size() > 0) {
+
+			Point n = q.poll();
+
+			if(!isTolerable(arrPixels[width*n.y + n.x]))
+				continue;
+
+			Point w = n, e = new Point(n.x + 1, n.y);
+			while ((w.x > 0) && isTolerable(arrPixels[width*w.y + w.x])) {
+				arrPixels[width*w.y + w.x] = replacementColor;  // setPixel
+
+				if ((w.y > 0) && isTolerable(arrPixels[width*(w.y-1) + w.x]))
+					q.add(new Point(w.x, w.y - 1));
+
+				if ((w.y < height - 1) && isTolerable(arrPixels[width*(w.y+1) + w.x]))
+					q.add(new Point(w.x, w.y + 1));
+
+				w.x--;
+			}
+
+			while ((e.x < width - 1) && isTolerable(arrPixels[width*e.y + e.x])) {
+				arrPixels[width*e.y + e.x] = replacementColor;  // setPixel
+
+				if ((e.y > 0) && isTolerable(arrPixels[width*(e.y-1) + e.x]))
+					q.add(new Point(e.x, e.y - 1));
+
+				if ((e.y < height - 1) && isTolerable(arrPixels[width*(e.y+1) + e.x]))
+					q.add(new Point(e.x, e.y + 1));
+
+				e.x++;
+			}
+		}
+
+		bmp.setPixels(arrPixels, 0, width, 0, 0, width, height);
+	}
+
+
+	/**
+	 * If the passed color is tolerable, return true.
+	 */
+	private boolean isTolerable(int currentColor){
+		int r = currentColor & 0xFF0000;
+		int g = currentColor & 0x00FF00;
+		int b = currentColor & 0x0000FF;
+
+		if(r<minR || r>maxR || g<minG || g>maxG || b<minB || b>maxB)
+			return false;   // less than or grater than tolerable values
+		else
+			return true;
+	}
+
 
 }

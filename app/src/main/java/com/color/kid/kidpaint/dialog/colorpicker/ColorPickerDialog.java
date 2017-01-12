@@ -112,7 +112,7 @@ public final class ColorPickerDialog extends BaseDialog {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.colorpicker_dialog);
-		//setTitle(R.string.color_chooser_title);
+		setTitle(R.string.color_chooser_title);
 
 		Bitmap backgroundBitmap = BitmapFactory.decodeResource(getContext()
 				.getResources(), R.drawable.checkeredbg);
@@ -133,8 +133,7 @@ public final class ColorPickerDialog extends BaseDialog {
 		});
 
 		mColorPickerView = (ColorPickerView) findViewById(R.id.view_colorpicker);
-		mColorPickerView
-				.setOnColorChangedListener(new ColorPickerView.OnColorChangedListener() {
+		mColorPickerView.setOnColorChangedListener(new ColorPickerView.OnColorChangedListener() {
 					@Override
 					public void colorChanged(int color) {
 						changeNewColor(color);

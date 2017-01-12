@@ -10,8 +10,6 @@ import android.widget.RelativeLayout;
 import com.color.kid.kidpaint.R;
 import com.color.kid.kidpaint.adapter.Pencil;
 import com.color.kid.kidpaint.listener.OnClickItemBush;
-import com.color.kid.kidpaint.util.AnimationBottom;
-import com.color.kid.kidpaint.util.AnimationTop;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
