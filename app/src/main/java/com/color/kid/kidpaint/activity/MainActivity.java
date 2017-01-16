@@ -187,9 +187,15 @@ public class MainActivity extends OptionsActivity implements OnClickItemBush, On
 
 	@Override
 	protected void onDestroy() {
+		intitToolData();
+		super.onDestroy();
+	}
+
+	public void intitToolData(){
+		AppConstance.selectColor = getResources().getColor(R.color.aquamarine);
 		PaintroidApplication.commandManager.resetAndClear();
 		PaintroidApplication.drawingSurface.recycleBitmap();
-		ColorPickerDialog.getInstance().setInitialColor(getResources().getColor(R.color.aquamarine));
+		ColorPickerDialog.getInstance().setInitialColor(getResources().getColor(R.color.black));
 		PaintroidApplication.currentTool.changePaintStrokeCap(Cap.ROUND);
 		PaintroidApplication.currentTool.changePaintStrokeWidth(paintStrokeWidth);
 		PaintroidApplication.isPlainImage = true;
@@ -199,7 +205,6 @@ public class MainActivity extends OptionsActivity implements OnClickItemBush, On
 		ToolsDialog.getInstance().dismiss();
 		IndeterminateProgressDialog.getInstance().dismiss();
 		ColorPickerDialog.getInstance().dismiss();
-		super.onDestroy();
 	}
 
 
@@ -415,6 +420,7 @@ public class MainActivity extends OptionsActivity implements OnClickItemBush, On
 	@Override
 	public void onclickItemDraw(Bucket bucket) {
 		ColorPickerDialog.getInstance().setInitialColor(getResources().getColor(bucket.color));
+		AppConstance.selectColor = getResources().getColor(bucket.color);
 	}
 
 	public void setDataSelect(Pencil pencil){

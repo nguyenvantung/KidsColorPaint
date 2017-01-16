@@ -48,7 +48,7 @@ public class BucketAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         if (position > 0){
             BucketViewHolder viewholder = (BucketViewHolder) holder;
             viewholder.setOnClickItemDraw(onClickItemDraw);
-            viewholder.setData(bucketList.get(position));
+            viewholder.setData(bucketList.get(position-1));
         }else {
             PickerViewholder pickerViewholder = (PickerViewholder) holder;
             pickerViewholder.setData(R.drawable.color_picker);

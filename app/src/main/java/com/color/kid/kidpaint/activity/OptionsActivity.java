@@ -25,6 +25,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -415,7 +416,7 @@ public abstract class OptionsActivity extends FragmentActivity {
 		float width = display.getWidth();
 		float height = display.getHeight();
 		Bitmap bitmap = Bitmap.createBitmap((int) width, (int) height, Bitmap.Config.ARGB_8888);
-		bitmap.eraseColor(getColor(R.color.white));
+		bitmap.eraseColor(Color.WHITE);
 		PaintroidApplication.drawingSurface.resetBitmap(Util.overlay(bitmap, Util.drawableToBitmap(drawable, this)));
 		PaintroidApplication.perspective.resetScaleAndTranslation();
 		mCurrentTool = new DrawTool(this, ToolType.BRUSH);

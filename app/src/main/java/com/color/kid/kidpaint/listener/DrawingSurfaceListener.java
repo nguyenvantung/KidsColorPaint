@@ -108,8 +108,7 @@ public class DrawingSurfaceListener implements OnTouchListener {
                 if (mTouchMode == TouchMode.DRAW) {
                     PaintroidApplication.currentTool.handleUp(touchPoint);
                 } else {
-                    PaintroidApplication.currentTool
-                            .resetInternalState(Tool.StateChange.MOVE_CANCELED);
+                    PaintroidApplication.currentTool.resetInternalState(Tool.StateChange.MOVE_CANCELED);
                 }
                 mPointerDistance = 0;
                 mPointerMean.set(0, 0);
