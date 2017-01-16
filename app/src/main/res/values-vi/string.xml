@@ -20,7 +20,7 @@
 
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-  <string name="app_name">Pocket Paint</string>
+  <string name="app_name">KidPaint</string>
   <string name="button_brush">Cọ</string>
   <string name="button_cursor">Con trỏ</string>
   <string name="button_ellipse">Vòng tròn/hình elip</string>

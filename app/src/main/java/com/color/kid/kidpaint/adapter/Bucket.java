@@ -6,4 +6,6 @@ package com.color.kid.kidpaint.adapter;
 public class Bucket {
     public int color;
     public int drawable;
+    public int position;
+    public boolean select;
 }

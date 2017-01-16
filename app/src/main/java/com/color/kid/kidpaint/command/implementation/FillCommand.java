@@ -21,15 +21,10 @@ package com.color.kid.kidpaint.command.implementation;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.util.Log;
 
-import com.color.kid.kidpaint.R;
-import com.color.kid.kidpaint.activity.PaintroidApplication;
 import com.color.kid.kidpaint.constan.AppConstance;
-import com.color.kid.kidpaint.tools.helper.FillAlgorithm;
 import com.color.kid.kidpaint.tools.helper.QueueLinearFloodFiller;
 
 
@@ -55,28 +50,9 @@ public class FillCommand extends BaseCommand {
 		}
 		int replacementColor = AppConstance.selectColor;
 		int targetColor = bitmap.getPixel(mClickedPixel.x, mClickedPixel.y);
-			/*FillAlgorithm fillAlgorithm = new FillAlgorithm(bitmap, mClickedPixel, targetColor, replacementColor, mColorTolerance);
-			fillAlgorithm.performFilling();*/
 		QueueLinearFloodFiller queueLinearFloodFiller = new QueueLinearFloodFiller(bitmap, targetColor, replacementColor);
-		queueLinearFloodFiller.setTolerance(100);
+		queueLinearFloodFiller.setTolerance(50);
 		queueLinearFloodFiller.floodFill(mClickedPixel.x, mClickedPixel.y);
-
-
-	/*	if (PaintroidApplication.savedPictureUri == null
-				&& PaintroidApplication.commandManager.getNumberOfCommands() == EMPTY_COMMAND_LIST_LENGTH + 1) {
-			canvas.drawColor(mPaint.getColor());
-			Log.w(PaintroidApplication.TAG,
-					"Fill Command color: " + mPaint.getColor());
-		} else {
-			int replacementColor = bitmap.getPixel(mClickedPixel.x, mClickedPixel.y);
-			int targetColor = mPaint.getColor();
-			*//*FillAlgorithm fillAlgorithm = new FillAlgorithm(bitmap, mClickedPixel, targetColor, replacementColor, mColorTolerance);
-			fillAlgorithm.performFilling();*//*
-			QueueLinearFloodFiller queueLinearFloodFiller = new QueueLinearFloodFiller(bitmap, targetColor, Color.BLUE);
-			queueLinearFloodFiller.setTolerance(100);
-			queueLinearFloodFiller.floodFill(mClickedPixel.x, mClickedPixel.y);
-		}*/
-
 		notifyStatus(NOTIFY_STATES.COMMAND_DONE);
 	}
 }

@@ -413,7 +413,7 @@ public class MainActivity extends OptionsActivity implements OnClickItemBush, On
 	@Override
 	public void selectItemBush(Pencil pencil) {
 		pencilAdapter.notifyDataSetChanged();
-		setDataSelect(pencil);
+		setDataPencilSelect(pencil);
 		ColorPickerDialog.getInstance().setInitialColor(getResources().getColor(pencil.color));
 	}
 
@@ -421,14 +421,25 @@ public class MainActivity extends OptionsActivity implements OnClickItemBush, On
 	public void onclickItemDraw(Bucket bucket) {
 		ColorPickerDialog.getInstance().setInitialColor(getResources().getColor(bucket.color));
 		AppConstance.selectColor = getResources().getColor(bucket.color);
+		bucketAdapter.notifyDataSetChanged();
 	}
 
-	public void setDataSelect(Pencil pencil){
+	public void setDataPencilSelect(Pencil pencil){
 		for (int i = 0; i < listPencilData.size(); i++){
 			if (pencil.position != listPencilData.get(i).position){
 				listPencilData.get(i).select = false;
 			}else {
 				listPencilData.get(i).select = true;
+			}
+		}
+	}
+
+	public void setDataBucketlSelect(Bucket bucket){
+		for (int i = 0; i < listBucketData.size(); i++){
+			if (bucket.position != listBucketData.get(i).position){
+				listPencilData.get(i).select = false;
+			}else {
+				listBucketData.get(i).select = true;
 			}
 		}
 	}

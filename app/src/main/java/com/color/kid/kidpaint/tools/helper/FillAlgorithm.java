@@ -20,257 +20,213 @@
 package com.color.kid.kidpaint.tools.helper;
 
 import android.graphics.Bitmap;
-import android.graphics.Point;
+import android.graphics.Color;
 
 import java.util.LinkedList;
 import java.util.Queue;
 
 
 public class FillAlgorithm {
-	private static final boolean UP = true;
-	private static final boolean DOWN = false;
+	private static final int mHeight = 896;
+	private static final int[] mPixels;
+	private static final boolean[] mPixelsChecked;
+	private static final int[] mPixelsImage;
+	private static final int mWidth = 896;
+	private static FillAlgorithm sInstance;
+	private int mFillColor;
+	private Queue<FloodFillRange> mRanges;
+	protected int[] mStartColor;
+	protected int mStartColorSingle;
 
-	private Bitmap mBitmap;
-	private int[][] mPixels;
-	private Point mClickedPixel;
-	private int mTargetColor;
-	private int mReplacementColor;
-	private int mColorToleranceThresholdSquared;
-	private boolean mConsiderTolerance;
-	private int mWidth;
-	private int mHeight;
-	private Queue<Range> mRanges;
-	private boolean[][] mFilledPixels;
+	private class FloodFillRange {
+		public int f5Y;
+		public int endX;
+		public int startX;
 
-	class Range {
-		public int line;
-		public int start;
-		public int end;
-		public boolean direction;
-
-		public Range(int line, int start, int end, boolean directionUp) {
-			this.line = line;
-			this.start = start;
-			this.end = end;
-			this.direction = directionUp;
-		}
-
-		public Range() {
-			this.line = 0;
-			this.start = 0;
-			this.end = 0;
-			this.direction = false;
+		public FloodFillRange(int startX, int endX, int y) {
+			this.startX = startX;
+			this.endX = endX;
+			this.f5Y = y;
 		}
 	}
 
-	public FillAlgorithm(Bitmap bitmap, Point clickedPixel, int targetColor, int replacementColor, float colorToleranceThreshold) {
-		mBitmap = bitmap;
-		mWidth = bitmap.getWidth();
-		mHeight = bitmap.getHeight();
-		mPixels = new int[bitmap.getHeight()][bitmap.getWidth()];
-		for (int i = 0; i < mHeight; i++) {
-			mBitmap.getPixels(mPixels[i], 0, mWidth, 0, i, mWidth, 1);
-		}
-		mFilledPixels = new boolean[bitmap.getHeight()][bitmap.getWidth()];
-		mClickedPixel = clickedPixel;
-		mTargetColor = targetColor;
-		mReplacementColor = replacementColor;
-		mRanges = new LinkedList<Range>();
-		mColorToleranceThresholdSquared = (int)(colorToleranceThreshold*colorToleranceThreshold);
-		mConsiderTolerance = colorToleranceThreshold > 0;
+	static {
+		mPixels = new int[802816];
+		mPixelsImage = new int[802816];
+		mPixelsChecked = new boolean[802816];
 	}
 
-	public FillAlgorithm(){
-
-	}
-
-	public void performFilling(){
-		Range range = generateRangeAndReplaceColor(mClickedPixel.y + 10, mClickedPixel.x + 10, UP);
-		mRanges.add(range);
-		mRanges.add(new Range(range.line, range.start, range.end, DOWN));
-
-		int row;
-		while (!mRanges.isEmpty()) {
-			range = mRanges.poll();
-
-			if (range.direction == UP) {
-				row = range.line - 1;
-				if (row >= 0) {
-					checkRangeAndGenerateNewRanges(range, row, UP);
-				}
-			} else {
-				row = range.line + 1;
-				if (row < mHeight) {
-					checkRangeAndGenerateNewRanges(range, row, DOWN);
-				}
+	public static synchronized FillAlgorithm getInstance() {
+		FillAlgorithm queueLinearFloodFillerSingleton;
+		synchronized (FillAlgorithm.class) {
+			if (sInstance == null) {
+				sInstance = new FillAlgorithm();
 			}
+			queueLinearFloodFillerSingleton = sInstance;
+		}
+		return queueLinearFloodFillerSingleton;
+	}
+
+	public FillAlgorithm() {
+		this.mFillColor = 0;
+		this.mStartColor = new int[]{0, 0, 0, 0};
+	}
+
+	public void setup(Bitmap imgOverlay, Bitmap imgColoring) {
+		imgOverlay.getPixels(mPixels, 0, mWidth, 0, 0, mWidth, mWidth);
+		imgColoring.getPixels(mPixelsImage, 0, mWidth, 0, 0, mWidth, mWidth);
+		this.mRanges = new LinkedList();
+		for (int i = 0; i < mPixelsChecked.length; i++) {
+			mPixelsChecked[i] = false;
 		}
 	}
 
-	private Range generateRangeAndReplaceColor(int row, int col, boolean direction) {
-		Range range = new Range();
-		int i;
-		int start;
-
-		mPixels[row][col] = mTargetColor;
-		mFilledPixels[row][col] = true;
-
-		for (i = col - 1; i >= 0; i--) {
-			if (!mFilledPixels[row][i] && (mPixels[row][i] == mReplacementColor ||
-					(mConsiderTolerance && isPixelWithinColorTolerance(mPixels[row][i], mReplacementColor)))) {
-				mPixels[row][i] = mTargetColor;
-				mFilledPixels[row][i] = true;
-			} else {
-				break;
-			}
+	public void clearImage() {
+		if (this.mRanges != null) {
+			this.mRanges.clear();
 		}
-		start = i+1;
-
-		for (i = col + 1; i < mWidth; i++) {
-			if (!mFilledPixels[row][i] && (mPixels[row][i] == mReplacementColor ||
-					(mConsiderTolerance && isPixelWithinColorTolerance(mPixels[row][i], mReplacementColor)))) {
-				mPixels[row][i] = mTargetColor;
-				mFilledPixels[row][i] = true;
-			} else {
-				break;
-			}
-		}
-
-		range.line = row;
-		range.start = start;
-		range.end = i;
-		range.direction = direction;
-		
-		mBitmap.setPixels(mPixels[row], start, mWidth, start, row, i - start, 1);
-
-		return range;
+		sInstance = null;
 	}
 
-	private void checkRangeAndGenerateNewRanges(Range range, int row, boolean directionUp) {
-		Range newRange;
-		for (int col = range.start; col <= range.end; col++) {
-			if (!mFilledPixels[row][col] && (mPixels[row][col] == mReplacementColor ||
-					(mConsiderTolerance && isPixelWithinColorTolerance(mPixels[row][col], mReplacementColor)))) {
-				newRange = generateRangeAndReplaceColor(row, col, directionUp);
-				mRanges.add(newRange);
-
-				if (newRange.start <= range.start) {
-					mRanges.add(new Range(row, newRange.start, range.start - 2, !directionUp));
-				}
-				if (newRange.end >= range.end) {
-					mRanges.add(new Range(row, range.end + 2, newRange.end, !directionUp));
-				}
-
-				if (newRange.end >= range.end) {
-					break;
-				} else {
-					col = newRange.end + 1;
+	public void floodFill(int x, int y, int newColor, Bitmap bitmap) {
+		bitmap.getPixels(mPixelsImage, 0, mWidth, 0, 0, mWidth, mWidth);
+		setStartColor(mPixelsImage[(y * mWidth) + x]);
+		setFillColor(newColor);
+		if (Color.alpha(mPixels[(y * mWidth) + x]) != 255) {
+			LinearFill(x, y);
+			while (this.mRanges.size() > 0) {
+				FloodFillRange range = (FloodFillRange) this.mRanges.remove();
+				int upY = range.f5Y - 1;
+				int downY = range.f5Y + 1;
+				int downPxIdx = (downY * mWidth) + range.startX;
+				int upPxIdx = (upY * mWidth) + range.startX;
+				int i;
+				if (range.f5Y > 0 && range.f5Y < 895) {
+					for (i = range.startX; i <= range.endX; i++) {
+						if (!mPixelsChecked[upPxIdx] && CheckPixel(upPxIdx)) {
+							LinearFill(i, upY);
+						}
+						if (!mPixelsChecked[downPxIdx] && CheckPixel(downPxIdx)) {
+							LinearFill(i, downY);
+						}
+						downPxIdx++;
+						upPxIdx++;
+					}
+				} else if (range.f5Y > 0) {
+					for (i = range.startX; i <= range.endX; i++) {
+						if (!mPixelsChecked[upPxIdx] && CheckPixel(upPxIdx)) {
+							LinearFill(i, upY);
+						}
+						upPxIdx++;
+					}
+				} else if (range.f5Y < 895) {
+					for (i = range.startX; i <= range.endX; i++) {
+						if (!mPixelsChecked[downPxIdx] && CheckPixel(downPxIdx)) {
+							LinearFill(i, downY);
+						}
+						downPxIdx++;
+					}
 				}
 			}
+			bitmap.setPixels(mPixelsImage, 0, mWidth, 0, 0, mWidth, mWidth);
 		}
 	}
 
-	private boolean isPixelWithinColorTolerance(int pixel, int referenceColor) {
-		int redDiff = ((pixel >> 16) & 0xFF) - ((referenceColor >> 16) & 0xFF);
-		int greenDiff = ((pixel >> 8) & 0xFF) - ((referenceColor >> 8) & 0xFF);
-		int blueDiff = (pixel & 0xFF) - (referenceColor & 0xFF);
-		int alphaDiff = (pixel >>> 24) - (referenceColor >>> 24);
-
-		return redDiff*redDiff + greenDiff*greenDiff + blueDiff*blueDiff + alphaDiff*alphaDiff
-				<= mColorToleranceThresholdSquared;
-	}
-
-
-	/////////////////
-	int minR, maxR, minG, maxG, minB, maxB;  // instance values
-
-	public void floodFill_array(Bitmap bmp, Point pt, int targetColor, int replacementColor, int tolerance)
-	{
-		if(targetColor == replacementColor)
-			return;
-
-        /* tolerable values */
-		minR = ((targetColor & 0xFF0000) >> 16) - tolerance;
-		if(minR < 0) minR = 0;
-		else minR = minR << 16;
-		maxR = ((targetColor & 0xFF0000) >> 16) + tolerance;
-		if(maxR > 0xFF) maxR = 0xFF0000;
-		else maxR = maxR << 16;
-
-		minG = ((targetColor & 0x00FF00) >> 8) - tolerance;
-		if(minG < 0) minG = 0;
-		else minG = minG << 8;
-		maxG = ((targetColor & 0x00FF00) >> 8) + tolerance;
-		if(maxG > 0xFF) maxG = 0x00FF00;
-		else maxG = maxG << 8;
-
-		minB = (targetColor & 0x0000FF) - tolerance;
-		if(minB < 0) minB = 0;
-		maxB = (targetColor & 0x0000FF) + tolerance;
-		if(maxB > 0xFF) maxB = 0x0000FF;
-        /* tolerable values */
-
-		int width, height;
-		int[] arrPixels;
-
-		width = bmp.getWidth();
-		height = bmp.getHeight();
-
-		arrPixels = new int[width*height];
-		bmp.getPixels(arrPixels, 0, width, 0, 0, width, height);
-
-		Queue<Point> q = new LinkedList<Point>();
-		q.add(pt);
-
-		while (q.size() > 0) {
-
-			Point n = q.poll();
-
-			if(!isTolerable(arrPixels[width*n.y + n.x]))
-				continue;
-
-			Point w = n, e = new Point(n.x + 1, n.y);
-			while ((w.x > 0) && isTolerable(arrPixels[width*w.y + w.x])) {
-				arrPixels[width*w.y + w.x] = replacementColor;  // setPixel
-
-				if ((w.y > 0) && isTolerable(arrPixels[width*(w.y-1) + w.x]))
-					q.add(new Point(w.x, w.y - 1));
-
-				if ((w.y < height - 1) && isTolerable(arrPixels[width*(w.y+1) + w.x]))
-					q.add(new Point(w.x, w.y + 1));
-
-				w.x--;
-			}
-
-			while ((e.x < width - 1) && isTolerable(arrPixels[width*e.y + e.x])) {
-				arrPixels[width*e.y + e.x] = replacementColor;  // setPixel
-
-				if ((e.y > 0) && isTolerable(arrPixels[width*(e.y-1) + e.x]))
-					q.add(new Point(e.x, e.y - 1));
-
-				if ((e.y < height - 1) && isTolerable(arrPixels[width*(e.y+1) + e.x]))
-					q.add(new Point(e.x, e.y + 1));
-
-				e.x++;
-			}
+	public void floodFillFinish() {
+		this.mRanges.clear();
+		for (int i = 0; i < mPixelsChecked.length; i++) {
+			mPixelsChecked[i] = false;
 		}
-
-		bmp.setPixels(arrPixels, 0, width, 0, 0, width, height);
 	}
 
+	/* JADX WARNING: inconsistent code. */
+    /* Code decompiled incorrectly, please refer to instructions dump. */
+	private void LinearFill(int r9, int r10) {
+        /*
+        r8 = this;
+        r7 = 896; // 0x380 float:1.256E-42 double:4.427E-321;
+        r6 = 1;
+        r0 = r9;
+        r4 = r10 * 896;
+        r1 = r4 + r9;
+    L_0x0008:
+        r4 = mPixelsImage;
+        r5 = r8.mFillColor;
+        r4[r1] = r5;
+        r4 = mPixelsChecked;
+        r4[r1] = r6;
+        r0 = r0 + -1;
+        r1 = r1 + -1;
+        if (r0 < 0) goto L_0x0024;
+    L_0x0018:
+        r4 = mPixelsChecked;
+        r4 = r4[r1];
+        if (r4 != 0) goto L_0x0024;
+    L_0x001e:
+        r4 = r8.CheckPixel(r1);
+        if (r4 != 0) goto L_0x0008;
+    L_0x0024:
+        r0 = r0 + 1;
+        r3 = r9 + 1;
+        r4 = r10 * 896;
+        r4 = r4 + r9;
+        r1 = r4 + 1;
+        if (r3 >= r7) goto L_0x0057;
+    L_0x002f:
+        r4 = mPixelsChecked;
+        r4 = r4[r1];
+        if (r4 != 0) goto L_0x0057;
+    L_0x0035:
+        r4 = r8.CheckPixel(r1);
+        if (r4 == 0) goto L_0x0057;
+    L_0x003b:
+        r4 = mPixelsImage;
+        r5 = r8.mFillColor;
+        r4[r1] = r5;
+        r4 = mPixelsChecked;
+        r4[r1] = r6;
+        r3 = r3 + 1;
+        r1 = r1 + 1;
+        if (r3 >= r7) goto L_0x0057;
+    L_0x004b:
+        r4 = mPixelsChecked;
+        r4 = r4[r1];
+        if (r4 != 0) goto L_0x0057;
+    L_0x0051:
+        r4 = r8.CheckPixel(r1);
+        if (r4 != 0) goto L_0x003b;
+    L_0x0057:
+        r3 = r3 + -1;
+        r2 = new com.coloring.book.animals.algorithm.QueueLinearFloodFillerSingleton$FloodFillRange;
+        r2.<init>(r0, r3, r10);
+        r4 = r8.mRanges;
+        r4.offer(r2);
+        return;
+        */
+		throw new UnsupportedOperationException("Method not decompiled: com.coloring.book.animals.algorithm.QueueLinearFloodFillerSingleton.LinearFill(int, int):void");
+	}
 
-	/**
-	 * If the passed color is tolerable, return true.
-	 */
-	private boolean isTolerable(int currentColor){
-		int r = currentColor & 0xFF0000;
-		int g = currentColor & 0x00FF00;
-		int b = currentColor & 0x0000FF;
-
-		if(r<minR || r>maxR || g<minG || g>maxG || b<minB || b>maxB)
-			return false;   // less than or grater than tolerable values
-		else
+	private boolean CheckPixel(int px) {
+		if (Color.alpha(mPixels[px]) == 255) {
+			mPixelsImage[px] = this.mFillColor;
+			return false;
+		} else if (mPixelsImage[px] == this.mStartColorSingle) {
 			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private void setFillColor(int value) {
+		this.mFillColor = value;
+	}
+
+	private void setStartColor(int startColor) {
+		this.mStartColorSingle = startColor;
+		this.mStartColor[0] = Color.red(startColor);
+		this.mStartColor[1] = Color.green(startColor);
+		this.mStartColor[2] = Color.blue(startColor);
+		this.mStartColor[3] = Color.alpha(startColor);
 	}
 
 

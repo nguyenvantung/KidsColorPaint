@@ -3,6 +3,7 @@ package com.color.kid.kidpaint.util;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
@@ -34,7 +35,7 @@ public class Util {
 
     public static Bitmap drawableToBitmap (Drawable drawable, Activity activity) {
         Display display = activity.getWindowManager().getDefaultDisplay();
-        float width = display.getWidth();
+        float width = display.getWidth() + 100;
         Bitmap bitmap = Bitmap.createBitmap((int)width, (int)width, Bitmap.Config.ARGB_8888);
         if (drawable instanceof BitmapDrawable) {
             bitmap = ((BitmapDrawable)drawable).getBitmap();
@@ -65,7 +66,7 @@ public class Util {
         Bitmap bmOverlay = Bitmap.createBitmap(bmp1.getWidth(), bmp1.getHeight(), bmp1.getConfig());
         Canvas canvas = new Canvas(bmOverlay);
         canvas.drawBitmap(bmp1, new Matrix(), null);
-        canvas.drawBitmap(bmp2, 0, 0, null);
+        canvas.drawBitmap(bmp2, 100, 200, null);
         return bmOverlay;
     }
 

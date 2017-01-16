@@ -29,7 +29,7 @@ public class ChoiseViewholder extends RecyclerView.ViewHolder implements View.On
 
     public void setData(int drawable) {
         drawableData = drawable;
-        imageView.setImageDrawable(imageView.getContext().getDrawable(drawable));
+        imageView.setImageDrawable(itemView.getContext().getDrawable(drawable));
     }
 
     @Override

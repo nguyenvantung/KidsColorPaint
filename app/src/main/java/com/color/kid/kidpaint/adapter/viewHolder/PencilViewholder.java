@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import com.color.kid.kidpaint.R;
 import com.color.kid.kidpaint.adapter.Pencil;
 import com.color.kid.kidpaint.listener.OnClickItemBush;
+import com.color.kid.kidpaint.util.DebugLog;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -22,7 +23,7 @@ public class PencilViewholder extends RecyclerView.ViewHolder implements View.On
     ImageView imgItem;
 
     @Bind(R.id.layoutPencil)
-    RelativeLayout layoutPencil;
+    public RelativeLayout layoutPencil;
 
     public OnClickItemBush clickItemBush;
     private Pencil pencil;
@@ -37,12 +38,13 @@ public class PencilViewholder extends RecyclerView.ViewHolder implements View.On
     public void onClick(View view) {
         if (clickItemBush != null) {
             pencil.select = true;
+            pencil.position = getAdapterPosition();
             clickItemBush.selectItemBush(pencil);
         }
     }
 
     public void setAnimation(boolean select){
-        if (select) {
+        if (select && getAdapterPosition() == pencil.position) {
             layoutPencil.animate().translationY((float) imgItem.getContext().getResources()
                     .getDimensionPixelSize(R.dimen.item_select)).setDuration(300)
                     .setInterpolator(new BounceInterpolator()).setListener(this).start();
